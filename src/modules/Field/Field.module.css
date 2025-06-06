@@ -1,0 +1,28 @@
+.buttonContainer {
+    position: absolute;              /* Позиционируем абсолютно */
+    top: 50%;                       /* Центрирование по вертикали */
+    left: 50%;                      /* Центрирование по горизонтали */
+    transform: translate(-50%, -50%); /* Корректируем положение от центра */
+    display: grid;                  /* Используем Grid Layout */
+    grid-template-columns: repeat(3, 1cm); /* Трехколоночная сетка шириной 1см */
+    grid-template-rows: repeat(3, 1cm);    /* Трехрядная сетка высотой 1см */
+    gap: 2px;                        /* Небольшое пространство между кнопками */
+}
+
+/* Стилизация кнопок */
+.buttonContainer button {
+    width: 1cm;                     /* Ширина кнопки = 1см */
+    height: 1cm;                    /* Высота кнопки = 1см */
+    font-size: 0.6cm;               /* Размер текста внутри кнопки */
+    background-color: #4CAF50;      /* Цвет фона */
+    color: white;                   /* Цвет текста */
+    border-radius: 5px;             /* Скругленные углы */
+    cursor: pointer;                /* Курсор меняется при наведении */
+    outline: none;                  /* Удаляем контур при фокусировке */
+    transition: all 0.2s ease-in-out; /* Плавность изменения цвета */
+}
+
+/* Эффект нажатия кнопки */
+.buttonContainer button:hover, .buttonContainer button:focus {
+    background-color: #3E8E41;      /* Темнеющий цвет при наведении и клике */
+}

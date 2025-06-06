@@ -1,0 +1,15 @@
+.repeatButton {
+  position: absolute;
+  top: 20%; /* смещаем вверх на половину высоты родителя */
+  left: 50%; /* смещаем вправо на половину ширины родителя */
+  transform: translate(-50%, -50%); /* компенсируем смещение на половину размера кнопки */
+  color: #a3b31b;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: rgb(151, 29, 29);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
