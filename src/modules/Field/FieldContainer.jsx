@@ -1,4 +1,6 @@
 import { FieldLayout } from "./FieldLayout";
+import { useSelector } from "../../reduxConnector.jsx";
+import { store } from "../../store.jsx";
 
 const WIN_PATTERNS = [
   [0, 1, 2],
@@ -11,15 +13,26 @@ const WIN_PATTERNS = [
   [2, 4, 6],
 ];
 
-export const FieldContainer = ({
-  currentPlayer,
-  setCurrentPlayer,
-  isGameEnded,
-  setIsGameEnded,
-  setIsDraw,
-  field,
-  setField,
-}) => {
+export const FieldContainer = () => {
+  // состояния для игрового поля
+  const field = useSelector((state) => state.field);
+  const setField = (newField) =>
+    store.dispatch({ type: "SET_FIELD", payload: newField });
+
+  // состояния для игрока
+  const currentPlayer = useSelector((state) => state.currentPlayer);
+  const setCurrentPlayer = (player) =>
+    store.dispatch({ type: "SET_CURRENT_PLAYER", payload: player });
+
+  // состояниe окончания игры
+  const isGameEnded = useSelector((state) => state.isGameEnded);
+  const setIsGameEnded = (value) =>
+    store.dispatch({ type: "SET_IS_GAME_ENDED", payload: value });
+
+  // состояниe для ничьей
+  const setIsDraw = (value) =>
+    store.dispatch({ type: "SET_IS_DRAW", payload: value });
+
   const handleCellClick = (index) => {
     if (!isGameEnded && !field[index]) {
       const newField = [...field]; // Копируем массив
