@@ -1,9 +1,11 @@
 import { AppLayout } from "./AppLayout";
-import { store } from "./store.jsx";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+
   const repeatGame = () => {
-    store.dispatch({ type: "RESET_GAME" });
+    dispatch({ type: "RESET_GAME" });
   };
 
   return <AppLayout repeatGame={repeatGame} />;
