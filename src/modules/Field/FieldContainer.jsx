@@ -1,37 +1,30 @@
 import { FieldLayout } from "./FieldLayout";
-import { useSelector } from "../../reduxConnector.jsx";
-import { store } from "../../store.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { checkWinCondition } from "../../function/checkWinCondition";
+import {
+  currentPlayerSelector,
+  fieldSelector,
+  isGameEndedSelector,
+} from "../../selectors";
 
-const WIN_PATTERNS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
+import {
+  setFieldChange,
+  currentPlayerChange,
+  isDrawChange,
+  isGameEndedChange,
+} from "../../actions";
 
 export const FieldContainer = () => {
-  // состояния для игрового поля
-  const field = useSelector((state) => state.field);
-  const setField = (newField) =>
-    store.dispatch({ type: "SET_FIELD", payload: newField });
+  const field = useSelector(fieldSelector); // состояния для игрового поля
+  const currentPlayer = useSelector(currentPlayerSelector); // состояния для игрока
+  const isGameEnded = useSelector(isGameEndedSelector); // состояниe окончания игры
 
-  // состояния для игрока
-  const currentPlayer = useSelector((state) => state.currentPlayer);
-  const setCurrentPlayer = (player) =>
-    store.dispatch({ type: "SET_CURRENT_PLAYER", payload: player });
+  const dispatch = useDispatch();
 
-  // состояниe окончания игры
-  const isGameEnded = useSelector((state) => state.isGameEnded);
-  const setIsGameEnded = (value) =>
-    store.dispatch({ type: "SET_IS_GAME_ENDED", payload: value });
-
-  // состояниe для ничьей
-  const setIsDraw = (value) =>
-    store.dispatch({ type: "SET_IS_DRAW", payload: value });
+  const setField = (newField) => dispatch(setFieldChange(newField));
+  const setCurrentPlayer = (player) => dispatch(currentPlayerChange(player));
+  const setIsGameEnded = (value) => dispatch(isGameEndedChange(value));
+  const setIsDraw = (value) => dispatch(isDrawChange(value)); // состояниe для ничьей
 
   const handleCellClick = (index) => {
     if (!isGameEnded && !field[index]) {
@@ -50,20 +43,6 @@ export const FieldContainer = () => {
         setCurrentPlayer(currentPlayer === "X" ? "O" : "X"); // Переключаем игрока, если игра продолжается
       }
     }
-  };
-
-  const checkWinCondition = (newField) => {
-    for (let i = 0; i < WIN_PATTERNS.length; i++) {
-      const pattern = WIN_PATTERNS[i];
-      const firstSymbol = newField[pattern[0]];
-      if (
-        firstSymbol !== "" &&
-        pattern.every((index) => newField[index] === firstSymbol)
-      ) {
-        return true; // Нашли победителя
-      }
-    }
-    return false; // Победы нет
   };
 
   return <FieldLayout field={field} handleCellClick={handleCellClick} />;
